@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        #display {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 24px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            outline: none;
+            text-align: right;
+            box-sizing: border-box;
+        }
+
+        .keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .keys button {
+            padding: 15px;
+            font-size: 35px;
+            border: none;
+            border-radius: 50px;
+            background-color: #d0d0d0;
+            cursor: pointer;
+        }
+
+        .keys button:hover {
+            background-color: #b0b0b0;
+        }
+
+        .keys button.operator {
+            background-color: #f79e1b;
+            color: #fff;
+        }
+
+        .keys button.operator:hover {
+            background-color: #d77700;
+        }
+
+        .keys button.equal {
+            background-color: #48c774;
+            color: #fff;
+        }
+
+        .keys button.equal:hover {
+            background-color: #37a16b;
+        }
+
+        .keys button.clear {
+            background-color: #f25353;
+            color: #fff;
+        }
+
+        .keys button.clear:hover {
+            background-color: #d64141;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="keys">
+            <!-- Кнопки для введення цифр -->
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <!-- Кнопки для вибору знаків дій -->
+            <button class="operator" onclick="setOperator('+')">+</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="setOperator('-')">-</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="setOperator('*')">*</button>
+            <!-- Кнопки для 0, очищення та обчислення -->
+            <button onclick="appendToDisplay('0')">0</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="equal" onclick="calculate()">=</button>
+            <button class="operator" onclick="setOperator('/')">/</button>
+        </div>
+    </div>
+
+    <script>
+        // Функція для додавання символу до відображення
+        function appendToDisplay(value) {
+            // Перевірка на максимальну довжину введеного виразу (за бажанням)
+            if (document.getElementById('display').value.length < 20) {
+                document.getElementById('display').value += value;
+                operatorClicked = false; // При додаванні числа знак дії може бути натиснутим знову
+            }
+        }
+
+        // Функція для очищення відображення
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+            operatorClicked = false;
+        }
+
+        // Функція для встановлення знаку дії
+        let operatorClicked = false;
+        function setOperator(operator) {
+            if (!operatorClicked) {
+                document.getElementById('display').value += operator;
+                operatorClicked = true; // Помітити, що знак дії був введений
+            }
+        }
+
+        // Функція для обчислення результату
+        function calculate() {
+            var displayValue = document.getElementById('display').value;
+            var result = eval(displayValue);
+            document.getElementById('display').value = result;
+            operatorClicked = false; // Після розрахунку можна знову використовувати знаки дій
+        }
+    </script>
+</body>
+</html>
